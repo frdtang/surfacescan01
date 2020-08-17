@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  motor01:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: motor01
+    volumes:
+      - demo:/data/
+    ports:
+      - "8000:8000"
+
+volumes:
+  demo:
+    external: true
