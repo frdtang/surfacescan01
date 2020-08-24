@@ -1,2 +1,2 @@
 # surfacescan01
-USB-RS487 Surface Scanner Logger
+USB-RS485 Surface Scanner Logger
