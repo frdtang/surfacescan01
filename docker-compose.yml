@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    container_name: motor01
+    container_name: distancesensor
     volumes:
       - demo:/data/
     ports:
