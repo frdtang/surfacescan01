@@ -13,7 +13,7 @@ while True:
     resp = port.readline()  
     print(resp)  
     
-    port.write(str.encode('Hello laptop!\n'))
+    #port.write(str.encode('Hello laptop!\n'))
     time.sleep(1)
           
 
