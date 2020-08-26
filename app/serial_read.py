@@ -2,7 +2,7 @@
 
 import serial
  
-ser = serial.Serial(port='/dev/ttyAMA0', 
+ser = serial.Serial(port='/dev/tty0', 
                     baudrate=38400,
                     timeout=1)
 
