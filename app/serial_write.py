@@ -9,5 +9,5 @@ ser = serial.Serial(port='/dev/ttyS0',
                     timeout=1)
 
 while True:
-    ser.write('Hello World\n')
+    ser.write(b'Hello World\n')
     time.sleep(1)
