@@ -2,7 +2,7 @@
 import time
 import serial
  
-port = serial.Serial(port='/dev/ttyS0',
+read_port = serial.Serial(port='/dev/ttyS0',
                           baudrate=38400,
                           bytesize=8,
                           stopbits=1,
@@ -10,9 +10,11 @@ port = serial.Serial(port='/dev/ttyS0',
 
 
 while True:
-    resp = port.readline()  
-    if resp: 
+    resp = read_port.readline()  
+    if resp:
         print(resp)  
     
-    port.write(str.encode('Hello laptop!\n'))
+    read_port.write(str.encode('Sarah is the prettiest'))
     time.sleep(1)
+          
+
