@@ -10,11 +10,11 @@ read_port = serial.Serial(port='/dev/ttyS0',
 
 
 while True:
-    resp = read_port.readline()  
-    if resp:
-        print(resp)  
+    # resp = read_port.readline()  
+    # if resp:
+    #     print(resp)  
     
-    read_port.write(str.encode('Sarah is the prettiest'))
+    read_port.write(str.encode('Hello laptop!\n'))
     time.sleep(1)
           
 
