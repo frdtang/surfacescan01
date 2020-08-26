@@ -9,7 +9,7 @@ ser = serial.Serial(port='/dev/ttyS0',
                     timeout=1)
 
 send_str = 'Hello laptop!\r\n'
-
+send_str = "*******rs485888888--\r\n"
 while True:
     ser.write(str.encode(send_str))
     time.sleep(1)
