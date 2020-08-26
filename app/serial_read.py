@@ -12,6 +12,7 @@ while True:
     resp = ser.readline()  
     if resp:
         print(resp)        
+    time.sleep(1)
         
 
 
