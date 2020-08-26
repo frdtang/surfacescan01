@@ -10,7 +10,8 @@ ser = serial.Serial(port='/dev/ttyAMA0',
 
 while True:
     resp = ser.readline()  
-    print(resp)        
+    if resp:
+        print(resp)        
     time.sleep(1)
         
 
