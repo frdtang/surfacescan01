@@ -3,13 +3,10 @@
 import serial
  
 ser = serial.Serial(port='/dev/ttyAMA0', 
-                    parity=serial.PARITY_EVEN,
-                    baudrate=38400, 
-                    stopbits=1,
-                    bytesize=8,
+                    baudrate=38400,
                     timeout=1)
 
 while True:
-    resp = ser.write(":01R020;****\r\n")
+    resp = ser.readall()  
     if resp:  
         print(resp )
