@@ -19,7 +19,7 @@ while True:
     if resp:
         print(resp)  
     
-    send_port.write(b'Hello Laptop\n')
+    #send_port.write('Hello Laptop\n')
     time.sleep(1)
           
 
