@@ -7,4 +7,4 @@ ser = serial.Serial(port='/dev/ttyAMA0',baudrate=38400,bytesize=8,stopbits=1,tim
 while True:
     resp = ser.readall()  
     if resp:  
-        print(resp )
+        print(resp)
