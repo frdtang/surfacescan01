@@ -10,5 +10,4 @@ ser = serial.Serial(port='/dev/ttyS0',
 
 while True:
     ser.write(b'Hello World\n')
-    print("Sending message.\n")
     time.sleep(1)
