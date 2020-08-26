@@ -2,7 +2,7 @@
 import time
 import serial
  
-ser = serial.Serial(port='/dev/ttyS0',
+ser = serial.Serial(port='/dev/tty0',
                     baudrate=38400,
                     bytesize=8,
                     stopbits=1,
