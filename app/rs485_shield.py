@@ -32,5 +32,5 @@ while 1:
         x=ser.readline()
         if "********" in x:
 #            print "str length is: " + str(count)
-            print x
+            print(x)
 
