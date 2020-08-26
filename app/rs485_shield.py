@@ -27,10 +27,7 @@ while 1:
         os.system("echo 0 > /sys/class/gpio/gpio18/value")
     os.system("echo 0 > /sys/class/gpio/gpio18/value")
     time.sleep(0.01)
-    count = ser.inWaiting()
-    if(count != 0):
-        x=ser.readline()
-        if "********" in x:
-#            print "str length is: " + str(count)
-            print(x)
+  
+    x=ser.readline()
+    print(x)
 
