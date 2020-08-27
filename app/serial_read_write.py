@@ -5,7 +5,7 @@ import serial
 read_port = serial.Serial(port='/dev/ttyS0',
                           baudrate=57600,
                           bytesize=8,
-                          parity=1,
+                          parity=serial.PARITY_EVEN,
                           stopbits=1)
 
 
