@@ -9,7 +9,7 @@ import serial.rs485
 #                           stopbits=1)
 
 
-port=serial.rs485.RS485(port='/dev/ttyAMA0',baudrate=57600)
+port=serial.rs485.RS485(port='/dev/ttyS0',baudrate=57600)
 port.rs485_mode = serial.rs485.RS485Settings(False,True)
 
 
