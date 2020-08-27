@@ -1,6 +1,6 @@
  
 import time
-import serial
+import serial.rs485
  
 # port = serial.Serial(port='/dev/ttyAMA0',
 #                           baudrate=57600,
