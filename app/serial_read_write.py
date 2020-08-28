@@ -12,10 +12,9 @@ port = serial.Serial(port='/dev/ttyS0',
 
    
 
-port.write(':01R010;0;E9C3r\n'.encode('utf-8'))
-while True:
 
-    port.write(':01R021;09F4r\n'.encode('utf-8'))
+while True:
+    port.write(b'Hello world')
     resp = port.readline()  
     if resp:
         print(resp)  
