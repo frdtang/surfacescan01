@@ -5,9 +5,10 @@ import serial
  
 port = serial.Serial(port='/dev/ttyS0',
                           baudrate=57600,
-                          bytesize=8,
-                          stopbits=1,
-                          timeout=1)
+                        #   bytesize=8,
+                        #   stopbits=1,
+                        #   timeout=1
+                          )
 
    
 
