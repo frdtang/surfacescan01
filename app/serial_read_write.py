@@ -10,7 +10,7 @@ port = serial.Serial(port='/dev/ttyS0',
                           )
 
 while True:
-    port.write(b'Hello world')
+    port.write(str.encode('Hello world'))
     resp = port.readline()  
     if resp:
         print(resp)  
