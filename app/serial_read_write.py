@@ -24,7 +24,7 @@ Ftdi.show_devices()
 
 
 send_string = b":01W010;0;E9C3\r\n"
-read_port.write(send_string)
+write_port.write(send_string)
 resp = read_port.readline()  
 if resp:
     print(resp)  
@@ -36,7 +36,7 @@ if resp:
     print(resp) 
 
 send_string = b":01R002;3955\r\n"
-read_port.write(send_string)
+write_port.write(send_string)
 resp = read_port.readline()  
 if resp:
     print(resp)  
@@ -48,7 +48,7 @@ if resp:
 
 while True:
     send_string = b":01R021;****\r\n"
-    read_port.write(send_string)    
+    write_port.write(send_string)    
     resp = read_port.readline()  
     if resp:
         print(resp)  
