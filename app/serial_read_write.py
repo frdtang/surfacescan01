@@ -25,12 +25,17 @@ Ftdi.show_devices()
 
 send_string = ":01W010;0;01R021;****\r\n"
 write_port.write(str.encode(send_string))
-    
+resp = read_port.readline()  
+if resp:
+    print(resp)  
+
+time.sleep(5)
+
 while True:
     send_string = ":01R021;****\r\n"
     write_port.write(str.encode(send_string))
     
-    time.sleep(1)
+    time.sleep(10)
     
     resp = read_port.readline()  
     if resp:
