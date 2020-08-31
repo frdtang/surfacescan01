@@ -29,8 +29,9 @@ resp = read_port.readline()
 if resp:
     print(resp)  
 
-time.sleep(1)
 
+time.sleep(1)
+resp = read_port.readline()  
 if resp:
     print(resp) 
 
@@ -41,6 +42,7 @@ if resp:
     print(resp)  
 
 time.sleep(1)
+resp = read_port.readline()  
 if resp:
     print(resp) 
 
