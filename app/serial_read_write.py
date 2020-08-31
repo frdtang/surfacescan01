@@ -23,7 +23,7 @@ write_port = pyftdi.serialext.serial_for_url('ftdi://ftdi:232:FT4IVQEG/1',
 Ftdi.show_devices()
 
 while True:
-    send_string = ":01R021;****\r\n"
+    send_string = ":01R021;****"
     write_port.write(str.encode(send_string))
     
     time.sleep(1)
