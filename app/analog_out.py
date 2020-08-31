@@ -4,6 +4,7 @@
 # Read and display analog input values
 #
 import sys
+import time
 from daqhats import hat_list, HatIDs, mcc118
 
 # get hat list of MCC daqhat boards
@@ -15,3 +16,4 @@ while True:
     board = mcc118(entry.address)    
     value = board.a_in_read(0)
     print("Ch {0}: {1:.3f}".format(0, value))	
+    time.sleep(1)
