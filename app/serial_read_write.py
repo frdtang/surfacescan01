@@ -30,6 +30,14 @@ resp = read_port.readline()
 if resp:
     print(resp)  
 
+
+send_string = b":01R002;3955\r\n"
+time.sleep(1)
+write_port.write(send_string)
+resp = read_port.readline()  
+if resp:
+    print(resp)  
+
 time.sleep(1)
 
 while True:
