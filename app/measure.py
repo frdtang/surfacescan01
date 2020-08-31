@@ -44,6 +44,8 @@ count=0
 while count<1000:
     write_port.write(send_string)   
     resp = read_port.readline()  
-    print(resp)  
+    print(resp)
+    resp = read_port.readline()  
+    print(resp)
     count+=1
 
