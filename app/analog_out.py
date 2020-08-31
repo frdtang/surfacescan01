@@ -12,9 +12,6 @@ board_list = hat_list(filter_by_id = HatIDs.ANY)
 entry = board_list[0]
 # Read and display every channel
 while True:
- 
-    print("Board {}: MCC 118".format(entry.address))
-    board = mcc118(entry.address)
-    channel = board.info().NUM_AI_CHANNELS[0]
-    value = board.a_in_read(channel)
-    print("Ch {0}: {1:.3f}".format(channel, value))	
+    board = mcc118(entry.address)    
+    value = board.a_in_read(0)
+    print("Ch {0}: {1:.3f}".format(0, value))	
