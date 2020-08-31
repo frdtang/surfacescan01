@@ -16,7 +16,7 @@ read_port = serial.Serial(port='/dev/ttyS0',
 write_port = pyftdi.serialext.serial_for_url('ftdi://ftdi:232:FT4IVQEG/1',
                                         baudrate=57600,
                                         bytesize=8,
-                                        parity='E',
+                                        parity=serial.PARITY_EVEN,
                                         stopbits=1,                            
                                         timeout=1)
 
@@ -28,6 +28,6 @@ while True:
     
     time.sleep(1)
     
-    resp = read_port.read()  
+    resp = read_port.readline()  
     if resp:
         print(resp)  
