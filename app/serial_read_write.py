@@ -31,6 +31,9 @@ if resp:
 
 time.sleep(1)
 
+if resp:
+    print(resp) 
+
 send_string = b":01R002;3955\r\n"
 write_port.write(send_string)
 resp = read_port.readline()  
@@ -38,6 +41,8 @@ if resp:
     print(resp)  
 
 time.sleep(1)
+if resp:
+    print(resp) 
 
 while True:
     send_string = b":01R021;****\r\n"
