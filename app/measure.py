@@ -43,8 +43,7 @@ send_string = b":01R021;****\r\n"
 count=0
 while count<1000:
     write_port.write(send_string)   
-    resp = read_port.readline()  
-    print(resp)
+    read_port.readline()  
     resp = read_port.readline()  
     print(resp)
     count+=1
