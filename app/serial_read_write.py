@@ -3,6 +3,7 @@ import time
 import serial
 import pyftdi.serialext
 from pyftdi.ftdi import Ftdi
+import binascii
  
 read_port = serial.Serial(port='/dev/ttyS0',
                           baudrate=57600,
@@ -25,6 +26,7 @@ Ftdi.show_devices()
 
 send_string = b":01W010;0;E9C3\r\n"
 time.sleep(1)
+send_string = binascii.hexlify(b":01W010;0;E9C3\r\n")
 write_port.write(send_string)
 resp = read_port.readline()  
 if resp:
@@ -33,6 +35,7 @@ if resp:
 
 send_string = b":01R002;3955\r\n"
 time.sleep(1)
+send_string = binascii.hexlify(b":01R002;3955\r\n")
 write_port.write(send_string)
 resp = read_port.readline()  
 if resp:
