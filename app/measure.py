@@ -12,20 +12,12 @@ read_port = serial.Serial(port='/dev/ttyS0',
                           timeout=1
                           )
 
-write_port = serial.Serial(port='/dev/ttyS0',
-                          baudrate=38400,
-                          bytesize=8,
-                          stopbits=1,
-                          timeout=1
-                          )
-
-
-# write_port = pyftdi.serialext.serial_for_url('ftdi://ftdi:232:FT4IVQEG/1',
-#                                         baudrate=38400,
-#                                         bytesize=8,
-#                                         parity=serial.PARITY_EVEN,
-#                                         stopbits=1,
-#                                         timeout=1)
+write_port = pyftdi.serialext.serial_for_url('ftdi://ftdi:232:FT4IVQEG/1',
+                                        baudrate=38400,
+                                        bytesize=8,
+                                        parity=serial.PARITY_EVEN,
+                                        stopbits=1,
+                                        timeout=1)
 
 Ftdi.show_devices()
 
