@@ -52,7 +52,6 @@ class Disk_Surface():
         self._write_port.write(b":01W034;0;****\r\n")
         self._read_port.read(27) 
 
-
         # Get sensor info
         self._write_port.write(b":01R002;3955\r\n")
         resp = self._read_port.read(70)  
@@ -119,8 +118,12 @@ class Disk_Surface():
             diff_click_UP = diff_click_UP[diff_click_UP > 0.01]
             
             
+            #first second average
+            avg = np.mean(diff_click_UP)
+            
             # second average
-            avg = np.min(diff_click_UP)
+            diff_click_UP = diff_click_UP[diff_click_UP > avg]
+            avg = np.mean(diff_click_UP)
             rpm_up = 60 / (avg * 12)
       
         print(f'Measured RPM: {round(rpm_up,2)}\n')
@@ -129,7 +132,7 @@ class Disk_Surface():
         distances = np.array([t['v'] for t in self._flatness])
         mean_distance = round(np.mean(distances), 3)
         std_dev_distance = round(np.std(distances), 3)
-        print(f'distance: {np.mean(distances)}\nStd. dev.: {np.std(distances)}\n')
+        print(f'distance: {mean_distance}\nStd. dev.: {std_dev_distance}\n')
 
 
 disk_surface = Disk_Surface()
