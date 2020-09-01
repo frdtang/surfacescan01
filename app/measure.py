@@ -11,9 +11,9 @@ class Disk_Surface():
  
         self._sensor_info = {}
         self._data = [] 
-        self._rpm_01 = np.array() 
-        self._rpm_02 =  np.array() 
-        self._flatness =  np.array() 
+        self._rpm_01 = np.array([]) 
+        self._rpm_02 =  np.array([]) 
+        self._flatness =  np.array([]) 
         
         self._read_port = serial.Serial(
             port='/dev/ttyS0',
