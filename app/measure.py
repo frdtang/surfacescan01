@@ -106,45 +106,23 @@ class Disk_Surface():
         
         print(self._data)
 
-        dv = np.array([t['dv'] for t in self._data])
-        rpm_01_condition = dv > 0.1
-        self._rpm_01 =  self._data[rpm_01_condition]
-        
-        rpm_02_condition = dv < -0.1
-        self._rpm_02 =  self._data[rpm_02_condition]
-        
-        flatness_condition = np.logical_not(np.logical_and(rpm_01_condition,rpm_02_condition))
+        q = np.array([t['q'] for t in self._data])
+        rpm_condition = q > 1
+        self._rpm =  self._data[rpm_condition]
+
+        flatness_condition = np.logical_not(rpm_condition)
         self._flatness =  self._data[flatness_condition]
                 
         rpm_up = 0
-        if self._rpm_01.size > 1:
-            click_UP = [t['time'] for t in self._rpm_01]
+        if self._rpm.size > 1:
+            click_UP = [t['time'] for t in self._rpm]
             diff_click_UP = np.diff(click_UP)
-            
-            print(diff_click_UP)
-                        
-                        
             # filtered diff_click_UP to ensure sufficiently apart
             diff_click_UP = diff_click_UP[diff_click_UP> 0.01]
             rpm_up = 60 / (np.mean(diff_click_UP) * 12)
       
-            print(diff_click_UP)
-            
-        print(f'Measured UP RPM: {round(rpm_up,2)}\n')
+        print(f'Measured RPM: {round(rpm_up,2)}\n')
 
-        rpm_down = 0
-        if self._rpm_02.size >0 :
-            click_DOWN = [t['time'] for t in self._rpm_02]
-            diff_click_DOWN = np.diff(click_DOWN)
-            
-            # filtered diff_click_UP to ensure sufficiently apart
-            diff_click_DOWN = diff_click_DOWN[diff_click_DOWN > 0.01]
-            mean_click_DOWN = np.mean(diff_click_DOWN)
-            
-
-            rpm_down = 60 / (np.mean(diff_click_DOWN) * 12)
-        
-        print(f'Measured DOWN RPM: {round(rpm_down,2)}\n')
             
         distances = np.array([t['v'] for t in self._flatness])
         mean_distance = round(np.mean(distances), 3)
