@@ -48,6 +48,11 @@ print(resp)
 
 send_string = b":01R021;****\r\n"
 count=0
+start_time = time.time()
+
+measurement = {"v" : 0, 
+               "q": 0,
+               "time": 0}
 while count<1000:
     write_port.write(send_string)   
     read_port.readline()  
@@ -55,7 +60,15 @@ while count<1000:
     
     distance = float(resp.split(b';')[1])
     quality = float(resp.split(b';')[2])
-    print({"v" : distance, "q": quality})
+    
+    previous = measurement
+    measurement = {"v" : distance, 
+                   "dv" : distance - previous['v'],
+                   "q": quality,
+                   "time": start_time-time.time()}
+    
+    
+    print(measurement)
     count+=1
 
 
