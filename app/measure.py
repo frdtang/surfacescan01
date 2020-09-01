@@ -104,9 +104,9 @@ class Disk_Surface():
         ''' Analyse data  to get flatness and RPM'''
 
         for point in self._data:
-            if point['dv'] > 0.1:
+            if point['dv'] > 0.2:
                 self._rpm_01.append(point)
-            elif point['dv'] < -0.1:
+            elif point['dv'] < -0.2:
                 self._rpm_02.append(point)
             else:
                 self._flatness.append(point)
@@ -139,6 +139,8 @@ class Disk_Surface():
         print(f'Measured DOWN RPM: {round(rpm_down,2)}\n')
             
         distances = np.array([t['v'] for t in self._flatness])
+        mean_distance = round(np.mean(distances), 3)
+        std_dev_distance = round(np.std(distances), 3)
         print(f'distance: {np.mean(distances)}\nStd. dev.: {np.std(distances)}\n')
 
 
