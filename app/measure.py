@@ -17,14 +17,14 @@ class Disk_Surface():
         
         self._read_port = serial.Serial(
             port='/dev/ttyS0',
-            baudrate=115200,
+            baudrate=38400,
             bytesize=8,
             stopbits=1,
             timeout=1)
 
         self._write_port = pyftdi.serialext.serial_for_url(
             'ftdi://ftdi:232:FT4IVQEG/1',
-            baudrate=115200,
+            baudrate=38400,
             bytesize=8,
             parity=serial.PARITY_EVEN,
             stopbits=1,
@@ -69,7 +69,7 @@ class Disk_Surface():
                        "q": 0,
                        "time": 0}
         
-        while count<1000:
+        while count<500:
             self._write_port.write(":01R021;****\r\n")    
             resp = self._read_port.read(35)  
             time_now = round(time.time()-start_time,3)
@@ -89,7 +89,6 @@ class Disk_Surface():
             
             self._data = np.append(self._data, measurement)
             count+=1
-            time.sleep(0.005)
             
         print(f't_max: {time_now}\n')
             
