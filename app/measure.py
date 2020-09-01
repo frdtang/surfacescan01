@@ -11,9 +11,9 @@ class Disk_Surface():
  
         self._sensor_info = {}
         self._data = [] 
-        self._rpm_01 = [] 
-        self._rpm_02 = [] 
-        self._flatness = [] 
+        self._rpm_01 = np.array() 
+        self._rpm_02 =  np.array() 
+        self._flatness =  np.array() 
         
         self._read_port = serial.Serial(
             port='/dev/ttyS0',
@@ -29,6 +29,10 @@ class Disk_Surface():
             parity=serial.PARITY_EVEN,
             stopbits=1,
             timeout=1)
+    
+    @property
+    def data(self):
+        return self._data
         
     def measure(self):
         
@@ -114,24 +118,23 @@ class Disk_Surface():
 
         rpm_up = 0
         if len(self._rpm_01)>1 :
-            click_UP = np.array([t['time'] for t in self._rpm_01])
+            click_UP = [(t['time'], t['dt']) for t in self._rpm_01]
             diff_click_UP = np.diff(click_UP)
-            mean_click_UP = np.mean(diff_click_UP)
+                        
+            # filtered diff_click_UP to ensure sufficiently apart
+            filter_diff_click_UP = filter_diff_click_UP[filter_diff_click_UP> 0.01]
+            
+            mean_click_UP = np.mean(filter_diff_click_UP)
             
             # filtered diff_click_UP based on average 
             filter_diff_click_UP = diff_click_UP[diff_click_UP<mean_click_UP] 
 
-            
-            # filtered diff_click_UP to ensure sufficiently apart
-            filter_diff_click_UP = filter_diff_click_UP[filter_diff_click_UP> 0.01]
+
             rpm_up = 60 / (np.mean(filter_diff_click_UP) * 12)
     
     
-        print('RPM data UP\n')
-        
-        for point in self._rpm_01:
-            print(point)
-    
+        print('RPM data UP\n')    
+
         print(f'Measured UP RPM: {round(rpm_up,2)}\n')
 
 
