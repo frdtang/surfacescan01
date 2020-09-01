@@ -46,19 +46,14 @@ class Disk_Surface():
         
         # Turn laser on
         self._write_port.write(b":01W034;0;****\r\n")
-        resp = self._read_port.readline() 
-        print(resp)
+        self._read_port.readline() 
         self._read_port.readline()  
-        print(resp)
 
 
         # Get sensor info
         self._write_port.write(b":01R002;3955\r\n")
-        resp = self._read_port.readline()
-        print(resp)
+        self._read_port.readline()
         resp = self._read_port.readline()  
-        print(resp) 
-
         self._sensor_info ={
             'sensor': resp.split(b';')[3].decode("utf-8"),
             'serial_number': int(resp.split(b';')[4])}
@@ -126,7 +121,7 @@ class Disk_Surface():
             print(point)
             
         distances = np.array([t['v'] for t in self._flatness])
-        print(f'distance: {np.mean(distances)}')
+        print(f'distance: {np.mean(distances)}\nStd. dev.: {np.std(distances)}')
 
 
 disk_surface = Disk_Surface()
