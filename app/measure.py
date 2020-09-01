@@ -41,7 +41,7 @@ write_port.write(send_string)
 read_port.readline()
 resp = read_port.readline()  
 
-sensor_type = str(resp.split(b';')[3])
+sensor_type = resp.split(b';')[3].decode("utf-8")
 serial_number = int(resp.split(b';')[4])
 
 print({'sensor': sensor_type,
@@ -57,26 +57,26 @@ measurement = {"v" : 0,
 
 while count<1000:
     write_port.write(send_string)   
-    read_port.readline()  
-    resp = read_port.readline()  
-    time_now = round(time.time()-start_time,3)
+    # read_port.readline()  
+    resp = read_port.readall()  
+    # time_now = round(time.time()-start_time,3)
     
     
-    distance = float(resp.split(b';')[1])
-    quality = float(resp.split(b';')[2])
+    # distance = float(resp.split(b';')[1])
+    # quality = float(resp.split(b';')[2])
     
-    previous = measurement
+    # previous = measurement
     
-    dv = round(distance - previous['v'],3)
-    dt = round(time_now - previous['time'],3)
+    # dv = round(distance - previous['v'],3)
+    # dt = round(time_now - previous['time'],3)
     
-    measurement = {"v" : distance, 
-                   "dv" : dv,                  
-                   "q": quality,
-                   "time": time_now,
-                   "dt": dt}
+    # measurement = {"v" : distance, 
+    #                "dv" : dv,                  
+    #                "q": quality,
+    #                "time": time_now,
+    #                "dt": dt}
     
-    print(measurement)
+    print(resp)
     count+=1
 
 
