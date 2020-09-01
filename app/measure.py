@@ -56,25 +56,22 @@ measurement = {"v" : 0,
                "time": 0}
 
 while count<1000:
-    write_port.write(send_string)   
-    # read_port.readline()  
+    write_port.write(send_string)    
     resp = read_port.read(35)  
-    # time_now = round(time.time()-start_time,3)
+    time_now = round(time.time()-start_time,3)
+    distance = float(resp.split(b';')[2])
+    quality = float(resp.split(b';')[3])
     
+    previous = measurement
     
-    # distance = float(resp.split(b';')[1])
-    # quality = float(resp.split(b';')[2])
+    dv = round(distance - previous['v'],3)
+    dt = round(time_now - previous['time'],3)
     
-    # previous = measurement
-    
-    # dv = round(distance - previous['v'],3)
-    # dt = round(time_now - previous['time'],3)
-    
-    # measurement = {"v" : distance, 
-    #                "dv" : dv,                  
-    #                "q": quality,
-    #                "time": time_now,
-    #                "dt": dt}
+    measurement = {"v" : distance, 
+                   "dv" : dv,                  
+                   "q": quality,
+                   "time": time_now,
+                   "dt": dt}
     
     print(resp)
     count+=1
