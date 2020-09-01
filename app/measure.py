@@ -58,8 +58,6 @@ class Disk_Surface():
         self._sensor_info ={
             'sensor': resp.split(b';')[4].decode("utf-8"),
             'serial_number': int(resp.split(b';')[5])}
-
-        print(self._sensor_info)
         
     def read_sensor(self):
         ''' Measure distance to disk'''
@@ -90,8 +88,6 @@ class Disk_Surface():
             self._data = np.append(self._data, measurement)
             count+=1
             
-        print(f't_max: {time_now}\n')
-            
     def shutdown(self):
         # Turn laser off
         # self._write_port.write( b":01W034;1;****\r\n")
@@ -112,9 +108,12 @@ class Disk_Surface():
         self._data = np.delete(self._data, 0)
 
         dv = np.array([t['dv'] for t in self._data])
-        rpm_condition = dv > 0.1
-        self._rpm =  self._data[rpm_condition]
+        rpm_condition_01 = dv > 0.1 
+        self._rpm =  self._data[rpm_condition_01]
 
+        rpm_condition_02 = dv < 0.1 
+        rpm_condition =  np.logical_and(rpm_condition_01,
+                                        rpm_condition_02)
         flatness_condition = np.logical_not(rpm_condition)
         self._flatness =  self._data[flatness_condition]
                 
