@@ -17,14 +17,14 @@ class Disk_Surface():
         
         self._read_port = serial.Serial(
             port='/dev/ttyS0',
-            baudrate=38400,
+            baudrate=115200,
             bytesize=8,
             stopbits=1,
             timeout=1)
 
         self._write_port = pyftdi.serialext.serial_for_url(
             'ftdi://ftdi:232:FT4IVQEG/1',
-            baudrate=38400,
+            baudrate=115200,
             bytesize=8,
             parity=serial.PARITY_EVEN,
             stopbits=1,
@@ -40,6 +40,12 @@ class Disk_Surface():
     def setup_sensor(self): 
         ''' Setup and get sensor info'''
         
+        
+        # Set bitrate to 115200
+        self._write_port.write(b":01W006;0;****\r\n")
+        self._read_port.readline() 
+        self._read_port.readline()  
+        
         # activate RS485 RS485 lock
         self._write_port.write(b":01W010;0;E9C3\r\n")
         self._read_port.read(27) 
@@ -48,7 +54,7 @@ class Disk_Surface():
         self._write_port.write(b":01W034;0;****\r\n")
         self._read_port.readline() 
         self._read_port.readline()  
-
+        
 
         # Get sensor info
         self._write_port.write(b":01R002;3955\r\n")
