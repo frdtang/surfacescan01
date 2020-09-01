@@ -109,9 +109,14 @@ class Disk_Surface():
 
         print('RPM data UP')
         click_UP = np.array([t['time'] for t in self._rpm_01])
+        diff_click_UP = np.diff(click_UP)
+        mean_click_UP=np.mean(diff_click_UP)
         
+        # filtered diff_click_UP
+        filter_diff_click_UP = diff_click_UP[diff_click_UP<mean_click_UP]
+        rpm_up = 60 / (np.mean(filter_diff_click_UP) * 12)
     
-        print(self._rpm_01)
+        print(f'Measured RPM: {rpm_up}\n')
 
 
         print('RPM data DOWN')
