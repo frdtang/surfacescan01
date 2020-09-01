@@ -115,7 +115,7 @@ class Disk_Surface():
 
 
         print('RPM data DOWN')
-        print(self._rpm_02
+        print(self._rpm_02)
 
         # print('Flatness data')
         # for point in self._flatness:
