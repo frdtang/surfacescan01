@@ -109,7 +109,7 @@ class Disk_Surface():
         q = np.array([t['q'] for t in self._data])
         good_condition = q == 0        
         self._data =  self._data[good_condition]
-        self._data = np.delete(0, self._data)
+        self._data = np.delete(self._data, 0)
 
         dv = np.array([t['dv'] for t in self._data])
         rpm_condition = dv > 0.1
