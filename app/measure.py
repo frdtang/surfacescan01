@@ -34,7 +34,7 @@ class Disk_Surface():
         
         self.setup_sensor()
         self.read_sensor()
-        #self.shutdown()
+        self.shutdown()
         self.analyse()
     
     def setup_sensor(self): 
@@ -49,11 +49,6 @@ class Disk_Surface():
         self._read_port.readline() 
         self._read_port.readline()  
         
-        # Turn laser on
-        self._write_port.write(b":01W034;0;****\r\n")
-        self._read_port.readline() 
-        self._read_port.readline()  
-
 
         # Get sensor info
         self._write_port.write(b":01R002;3955\r\n")
@@ -97,8 +92,12 @@ class Disk_Surface():
             
     def shutdown(self):
         # Turn laser off
-        self._write_port.write( b":01W034;1;****\r\n")
-        self._read_port.readall()
+        # self._write_port.write( b":01W034;1;****\r\n")
+        # self._read_port.readall()
+        
+        # activate RS485 RS485 lock
+        self._write_port.write(b":01W010;1;E9C3\r\n")
+        self._read_port.read(27) 
 
 
     def analyse(self):
