@@ -125,8 +125,7 @@ class Disk_Surface():
             
             # second average
             avg = np.mean(filtered_diff_click_UP)
-            print(avg)
-            rpm_up = 60 / (filtered_diff_click_UP * 12)
+            rpm_up = 60 / (avg * 12)
       
         print(f'Measured RPM: {round(rpm_up,2)}\n')
 
