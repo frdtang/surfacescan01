@@ -63,9 +63,9 @@ while count<1000:
     
     previous = measurement
     measurement = {"v" : distance, 
-                   "dv" : distance - previous['v'],
+                   "dv" : round(distance - previous['v'],3),
                    "q": quality,
-                   "time": start_time-time.time()}
+                   "time": round(start_time-time.time(),3)}
     
     
     print(measurement)
