@@ -112,7 +112,7 @@ class Disk_Surface():
             print(point)
 
 
-        print('RPM data DOWn')
+        print('RPM data DOWN')
         for point in self._rpm_02:
             print(point)
             
