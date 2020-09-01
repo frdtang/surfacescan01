@@ -121,8 +121,12 @@ class Disk_Surface():
             diff_click_UP = np.diff(click_UP)
             mean_click_UP = np.mean(diff_click_UP)
             
-            # filtered diff_click_UP
+            # filtered diff_click_UP based on average 
             filter_diff_click_UP = diff_click_UP[diff_click_UP<mean_click_UP]
+
+            
+            # filtered diff_click_UP to ensure sufficiently apart
+            filter_diff_click_UP = filter_diff_click_UP[filter_diff_click_UP> 0.01]
             rpm_up = 60 / (np.mean(filter_diff_click_UP) * 12)
     
         print(f'Measured UP RPM: {round(rpm_up,2)}\n')
@@ -136,7 +140,10 @@ class Disk_Surface():
             mean_click_DOWN = np.mean(diff_click_DOWN)
             
             # filtered diff_click_UP
-            filter_diff_click_UP = diff_click_DOWN[diff_click_DOWN<mean_click_DOWN]
+            diff_click_DOWN = diff_click_DOWN[diff_click_DOWN<mean_click_DOWN]
+                                    
+            # filtered diff_click_UP to ensure sufficiently apart
+            diff_click_DOWN = diff_click_DOWN[diff_click_DOWN> 0.01]
             rpm_down = 60 / (np.mean(filter_diff_click_UP) * 12)
         
         print(f'Measured DOWN RPM: {round(rpm_down,2)}\n')
