@@ -47,12 +47,12 @@ class Disk_Surface():
         # activate RS485 RS485 lock
         self._write_port.write(b":01W010;0;E9C3\r\n")
         self._read_port.read(27) 
-        
+
         # Turn laser on
         self._write_port.write(b":01W034;0;****\r\n")
         self._read_port.readline() 
         self._read_port.readline()  
-        
+
 
         # Get sensor info
         self._write_port.write(b":01R002;3955\r\n")
@@ -69,11 +69,10 @@ class Disk_Surface():
         count=0
         start_time = time.time()
         measurement = {"v" : 0, 
-                    "q": 0,
-                    "time": 0}
-
+                       "q": 0,
+                       "time": 0}
         
-        while count<2000:
+        while count<1000:
             self._write_port.write(":01R021;****\r\n")    
             resp = self._read_port.read(35)  
             time_now = round(time.time()-start_time,3)
@@ -118,39 +117,26 @@ class Disk_Surface():
 
         rpm_up = 0
         if len(self._rpm_01)>1 :
-            click_UP = [(t['time'], t['dt']) for t in self._rpm_01]
+            click_UP = [t['time'] for t in self._rpm_01]
             diff_click_UP = np.diff(click_UP)
                         
             # filtered diff_click_UP to ensure sufficiently apart
-            filter_diff_click_UP = filter_diff_click_UP[filter_diff_click_UP> 0.01]
-            
-            mean_click_UP = np.mean(filter_diff_click_UP)
-            
-            # filtered diff_click_UP based on average 
-            filter_diff_click_UP = diff_click_UP[diff_click_UP<mean_click_UP] 
-
-
+            filter_diff_click_UP = filter_diff_click_UP[diff_click_UP> 0.01]
             rpm_up = 60 / (np.mean(filter_diff_click_UP) * 12)
-    
-    
-        print('RPM data UP\n')    
-
+      
         print(f'Measured UP RPM: {round(rpm_up,2)}\n')
 
-
-        print('RPM data DOWN')
         rpm_down = 0
         if self._rpm_02:
-            click_DOWN = np.array([t['time'] for t in self._rpm_02])
+            click_DOWN = [t['time'] for t in self._rpm_02]
             diff_click_DOWN = np.diff(click_DOWN)
+            
+            # filtered diff_click_UP to ensure sufficiently apart
+            diff_click_DOWN = diff_click_DOWN[diff_click_DOWN > 0.01]
             mean_click_DOWN = np.mean(diff_click_DOWN)
             
-            # filtered diff_click_DON
-            diff_click_DOWN = diff_click_DOWN[diff_click_DOWN<mean_click_DOWN]
-                                    
-            # filtered diff_click_UP to ensure sufficiently apart
-            diff_click_DOWN = diff_click_DOWN[diff_click_DOWN> 0.01]
-            rpm_down = 60 / (np.mean(filter_diff_click_UP) * 12)
+
+            rpm_down = 60 / (np.mean(diff_click_DOWN) * 12)
         
         print(f'Measured DOWN RPM: {round(rpm_down,2)}\n')
             
