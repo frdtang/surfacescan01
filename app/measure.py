@@ -2,102 +2,130 @@
 import time
 import serial
 import pyftdi.serialext
-from pyftdi.ftdi import Ftdi
 
+
+class Disk_Surface():
+    
+    def __init__(self): 
  
-read_port = serial.Serial(port='/dev/ttyS0',
-                          baudrate=38400,
-                          bytesize=8,
-                          stopbits=1,
-                          timeout=1
-                          )
+        self._sensor_info = {}
+        self._data = [] 
+        self._rpm_01 = [] 
+        self._rpm_02 = [] 
+        self._flatness = [] 
+        
+        self._read_port = serial.Serial(
+            port='/dev/ttyS0',
+            baudrate=38400,
+            bytesize=8,
+            stopbits=1,
+            timeout=1)
 
-write_port = pyftdi.serialext.serial_for_url('ftdi://ftdi:232:FT4IVQEG/1',
-                                        baudrate=38400,
-                                        bytesize=8,
-                                        parity=serial.PARITY_EVEN,
-                                        stopbits=1,
-                                        timeout=1)
-
-Ftdi.show_devices()
-
-
-send_string = b":01W010;0;E9C3\r\n"
-write_port.write(send_string)
-resp = read_port.readline() 
-print(resp) 
-resp = read_port.readline()  
-print(resp)
-
-# Turn laser on
-send_string = b":01W034;0;****\r\n"
-write_port.write(send_string)
-read_port.readline() 
-read_port.readline()  
-
-
-send_string = b":01R002;3955\r\n"
-write_port.write(send_string)
-read_port.readline()
-resp = read_port.readline()  
-
-sensor_type = resp.split(b';')[3].decode("utf-8")
-serial_number = int(resp.split(b';')[4])
-
-print({'sensor': sensor_type,
-       'serial_number': serial_number})
-
-send_string = b":01R021;****\r\n"
-count=0
-start_time = time.time()
-
-measurement = {"v" : 0, 
-               "q": 0,
-               "time": 0}
-
-flatness_data = []
-rpm_data = []
-
-while count<1000:
-    write_port.write(send_string)    
-    resp = read_port.read(35)  
-    time_now = round(time.time()-start_time,3)
-    distance = float(resp.split(b';')[2])
-    quality = float(resp.split(b';')[3])
+        self._write_port = pyftdi.serialext.serial_for_url(
+            'ftdi://ftdi:232:FT4IVQEG/1',
+            baudrate=38400,
+            bytesize=8,
+            parity=serial.PARITY_EVEN,
+            stopbits=1,
+            timeout=1)
+        
+    def measure(self):
+        
+        self.setup_sensor()
+        self.read_sensor()
+        self.shutdown()
+        self.analyse()
     
-    previous = measurement
-    
-    dv = round(distance - previous['v'],3)
-    dt = round(time_now - previous['time'],3)
-    
-    measurement = {"v" : distance, 
-                   "dv" : dv,                  
-                   "q": quality,
-                   "time": time_now,
-                   "dt": dt}
-    
-    if (dv > 0.1 or dv < -0.1):
-        rpm_data.append(measurement)
-    else:
-        flatness_data.append(measurement)
-    count+=1
+    def setup_sensor(self): 
+        ''' Setup and get sensor info'''
+        
+        # activate RS485 RS485 lock
+        self._write_port.write(b":01W010;0;E9C3\r\n")
+        self._read_port.read(27) 
+        
+        # Turn laser on
+        self._write_port.write(b":01W034;0;****\r\n")
+        resp = self._read_port.readline() 
+        print(resp)
+        self._read_port.readline()  
+        print(resp)
 
 
-# Turn laser off
-send_string = b":01W034;1;****\r\n"
-write_port.write(send_string)
-resp = read_port.readline() 
-print(resp) 
-resp = read_port.readline()  
-print(resp)
+        # Get sensor info
+        self._write_port.write(b":01R002;3955\r\n")
+        resp = self._read_port.readline()
+        print(resp)
+        resp = self._read_port.readline()  
+        print(resp) 
 
-print('Flatness data')
-for point in flatness_data:
-    print(point)
+        self._sensor_info ={
+            'sensor': resp.split(b';')[3].decode("utf-8"),
+            'serial_number': int(resp.split(b';')[4])}
 
-print('RPM data')
-for point in rpm_data:
-    print(point)
+        print(self._sensor_info)
+        
+    def read_sensor(self):
+        ''' Measure distance to disk'''
+        count=0
+        start_time = time.time()
+        measurement = {"v" : 0, 
+                    "q": 0,
+                    "time": 0}
+
+        
+        while count<1000:
+            self._write_port.write(":01R021;****\r\n")    
+            resp = self._read_port.read(35)  
+            time_now = round(time.time()-start_time,3)
+            distance = float(resp.split(b';')[2])
+            quality = float(resp.split(b';')[3])
+            
+            previous = measurement
+            
+            dv = round(distance - previous['v'],3)
+            dt = round(time_now - previous['time'],3)
+            
+            measurement = {"v" : distance, 
+                        "dv" : dv,                  
+                        "q": quality,
+                        "time": time_now,
+                        "dt": dt}
+            
+            self._data = [] 
+            count+=1
+            
+    def shutdown(self):
+        # Turn laser off
+        self._write_port.write( b":01W034;1;****\r\n")
+        self._read_port.readall()
+
+
+    def analyse(self):
+        ''' Analyse data  to get flatness and RPM'''
+
+        for point in self._data:
+
+            if point['dv'] > 0.1:
+                self._rpm_01.append(point)
+            elif point['dv'] < -0.1:
+                self._rpm_02.append(point)
+            else:
+                self._flatness.append(point)
+
+        print('RPM data UP')
+        for point in self._rpm_01:
+            print(point)
+
+
+        print('RPM data DOWn')
+        for point in self._rpm_02:
+            print(point)
+            
+        print('Flatness data')
+        for point in self._flatness_data:
+            print(point)
 
 
 
+disk_surface = Disk_Surface()
+disk_surface.measure()
