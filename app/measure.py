@@ -92,9 +92,12 @@ resp = read_port.readline()
 print(resp)
 
 print('Flatness data')
-print(flatness_data)
+for point in flatness_data:
+    print(point)
 
 print('RPM data')
-print(flatness_drpm_dataata)
+for point in rpm_data:
+    print(point)
+
 
 
