@@ -89,6 +89,8 @@ class Disk_Surface():
             
             self._data = np.append(self._data, measurement)
             count+=1
+            time.sleep(0.005)
+            
         print(f't_max: {time_now}\n')
             
     def shutdown(self):
@@ -103,7 +105,9 @@ class Disk_Surface():
 
     def analyse(self):
         ''' Analyse data  to get flatness and RPM'''
-    
+        
+        print(self._data)
+
         q = np.array([t['q'] for t in self._data])
         rpm_condition_01 = q > 1
         dv = np.array([t['dv'] for t in self._data])
