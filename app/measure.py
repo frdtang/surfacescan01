@@ -122,7 +122,7 @@ class Disk_Surface():
             print(point)
             
         print('Flatness data')
-        for point in self._flatness_data:
+        for point in self._flatness:
             print(point)
 
 
