@@ -3,7 +3,8 @@ import time
 import serial
 import pyftdi.serialext
 from pyftdi.ftdi import Ftdi
-import binascii
+
+from influxdb import InfluxDBClient
  
 read_port = serial.Serial(port='/dev/ttyS0',
                           baudrate=38400,
