@@ -89,6 +89,7 @@ class Disk_Surface():
             
             self._data = np.append(self._data, measurement)
             count+=1
+        print(f't_max: {time_now}\n')
             
     def shutdown(self):
         # Turn laser off
