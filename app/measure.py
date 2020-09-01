@@ -118,6 +118,9 @@ class Disk_Surface():
         if self._rpm_01.size > 1:
             click_UP = [t['time'] for t in self._rpm_01]
             diff_click_UP = np.diff(click_UP)
+            
+            print(diff_click_UP)
+                        
                         
             # filtered diff_click_UP to ensure sufficiently apart
             diff_click_UP = diff_click_UP[diff_click_UP> 0.01]
