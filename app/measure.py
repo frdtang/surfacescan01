@@ -91,7 +91,7 @@ class Disk_Surface():
                         "time": time_now,
                         "dt": dt}
             
-            self._data = [] 
+            self._data.append(measurement)
             count+=1
             
     def shutdown(self):
@@ -104,7 +104,6 @@ class Disk_Surface():
         ''' Analyse data  to get flatness and RPM'''
 
         for point in self._data:
-
             if point['dv'] > 0.1:
                 self._rpm_01.append(point)
             elif point['dv'] < -0.1:
