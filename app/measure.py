@@ -40,10 +40,13 @@ print(resp)
 
 send_string = b":01R021;****\r\n"
 count=0
-while count<1000:
+while count<100:
     write_port.write(send_string)   
     read_port.readline()  
     resp = read_port.readline()  
-    print(resp)
+    
+    distance = float(resp.split(b';')[1])
+    quality = float(resp.split(b';')[2])
+    print({"v" : distance, "q": quality})
     count+=1
 
