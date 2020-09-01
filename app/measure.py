@@ -126,7 +126,7 @@ class Disk_Surface():
             print(point)
             
         distances = np.array([t['v'] for t in self._flatness])
-        print ['distance: ', np.mean(distances)]
+        print(f'distance: {np.mean(distances)}')
 
 
 disk_surface = Disk_Surface()
