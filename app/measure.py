@@ -55,6 +55,9 @@ measurement = {"v" : 0,
                "q": 0,
                "time": 0}
 
+flatness_data = []
+rpm_data = []
+
 while count<1000:
     write_port.write(send_string)    
     resp = read_port.read(35)  
@@ -73,7 +76,10 @@ while count<1000:
                    "time": time_now,
                    "dt": dt}
     
-    print(measurement)
+    if (dv > 0.1 or dv < -0.1):
+        rpm_data.append(measurement)
+    else:
+        flatness_data.append(measurement)
     count+=1
 
 
@@ -84,4 +90,11 @@ resp = read_port.readline()
 print(resp) 
 resp = read_port.readline()  
 print(resp)
+
+print('Flatness data')
+print(flatness_data)
+
+print('RPM data')
+print(flatness_drpm_dataata)
+
 
