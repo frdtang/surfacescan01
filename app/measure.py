@@ -73,7 +73,7 @@ while count<1000:
                    "time": time_now,
                    "dt": dt}
     
-    print(resp)
+    print(measurement)
     count+=1
 
 
