@@ -41,8 +41,8 @@ write_port.write(send_string)
 read_port.readline()
 resp = read_port.readline()  
 
-sensor_type = str(resp.split(b';') )
-serial_number = int(resp.split(b';') )
+sensor_type = str(resp.split(b';')[3])
+serial_number = int(resp.split(b';')[4])
 
 print({'sensor': sensor_type,
        'serial_number': serial_number})
