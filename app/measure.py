@@ -34,7 +34,7 @@ class Disk_Surface():
         
         self.setup_sensor()
         self.read_sensor()
-        self.shutdown()
+        #self.shutdown()
         self.analyse()
     
     def setup_sensor(self): 
@@ -116,9 +116,9 @@ class Disk_Surface():
         for point in self._rpm_02:
             print(point)
             
-        print('Flatness data')
-        for point in self._flatness:
-            print(point)
+        # print('Flatness data')
+        # for point in self._flatness:
+        #     print(point)
             
         distances = np.array([t['v'] for t in self._flatness])
         print(f'distance: {np.mean(distances)}\nStd. dev.: {np.std(distances)}')
