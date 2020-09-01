@@ -113,18 +113,14 @@ class Disk_Surface():
                 
         rpm_up = 0
         if self._rpm.size > 1:
-            print(self._rpm)
             click_UP = [t['time'] for t in self._rpm]
             diff_click_UP = np.diff(click_UP)
             # filtered diff_click_UP to ensure sufficiently apart
             diff_click_UP = diff_click_UP[diff_click_UP > 0.01]
             
-            # first average             
-            avg = np.mean(diff_click_UP)
-            filtered_diff_click_UP = diff_click_UP[diff_click_UP < avg]
             
             # second average
-            avg = np.mean(filtered_diff_click_UP)
+            avg = np.min(diff_click_UP)
             rpm_up = 60 / (avg * 12)
       
         print(f'Measured RPM: {round(rpm_up,2)}\n')
