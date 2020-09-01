@@ -131,8 +131,7 @@ class Disk_Surface():
         print(f'Measured DOWN RPM: {round(rpm_down,2)}\n')
             
         distances = np.array([t['v'] for t in self._flatness])
-        print(f'distance: {np.mean(distances)}\
-              Std. dev.: {np.std(distances)}\n')
+        print(f'distance: {np.mean(distances)}\nStd. dev.: {np.std(distances)}\n')
 
 
 disk_surface = Disk_Surface()
