@@ -1,6 +1,7 @@
  
 import time
 import serial
+import numpy as np
 import pyftdi.serialext
 
 
@@ -123,7 +124,9 @@ class Disk_Surface():
         print('Flatness data')
         for point in self._flatness:
             print(point)
-
+            
+        distances = np.array([t.v for t in self._flatness]).T
+        print ['distance: ', np.mean(distances)]
 
 
 disk_surface = Disk_Surface()
