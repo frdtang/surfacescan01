@@ -109,12 +109,12 @@ class Disk_Surface():
         for point in self._data:
             print(point)
             if point['dv'] > 0.1:
-                self._rpm_01.append(point)
+                np.append(self._rpm_01, point)
             elif point['dv'] < -0.1:
-                self._rpm_02.append(point)
+                np.append(self._rpm_02, point)
             else:
-                self._flatness.append(point)
-
+                np.append(self._flatness, point)
+                
         rpm_up = 0
         if len(self._rpm_01)>1 :
             click_UP = [t['time'] for t in self._rpm_01]
