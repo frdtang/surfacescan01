@@ -58,7 +58,7 @@ measurement = {"v" : 0,
 while count<1000:
     write_port.write(send_string)   
     # read_port.readline()  
-    resp = read_port.readall()  
+    resp = read_port.read(35)  
     # time_now = round(time.time()-start_time,3)
     
     
