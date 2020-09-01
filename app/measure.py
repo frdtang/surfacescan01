@@ -111,7 +111,7 @@ class Disk_Surface():
         rpm_02_condition = dv < -0.1
         self._rpm_02 =  self._data[rpm_02_condition]
         
-        flatness_condition = not(rpm_01_condition and rpm_02_condition)
+        flatness_condition = np.logical_not(np.logical_and(rpm_01_condition,rpm_02_condition))
         self._flatness =  self._data[flatness_condition]
                 
         rpm_up = 0
