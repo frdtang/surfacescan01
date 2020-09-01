@@ -42,7 +42,7 @@ class Disk_Surface():
         
         
         # Set bitrate to 115200
-        self._write_port.write(b":01W006;0;****\r\n")
+        self._write_port.write(b":01W006;2;****\r\n")
         self._read_port.readline() 
         self._read_port.readline()  
         
