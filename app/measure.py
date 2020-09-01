@@ -99,6 +99,10 @@ class Disk_Surface():
     def analyse(self):
         ''' Analyse data  to get flatness and RPM'''
 
+        print('Data')
+        for point in self._data:
+            print(point)
+
         for point in self._data:
             if point['dv'] > 0.1:
                 self._rpm_01.append(point)
