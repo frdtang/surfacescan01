@@ -10,7 +10,7 @@ class Disk_Surface():
     def __init__(self): 
  
         self._sensor_info = {}
-        self._data = [] 
+        self._data = np.array([]) 
         self._rpm_01 = np.array([]) 
         self._rpm_02 =  np.array([]) 
         self._flatness =  np.array([]) 
@@ -50,17 +50,15 @@ class Disk_Surface():
 
         # Turn laser on
         self._write_port.write(b":01W034;0;****\r\n")
-        self._read_port.readline() 
-        self._read_port.readline()  
+        self._read_port.read(27) 
 
 
         # Get sensor info
         self._write_port.write(b":01R002;3955\r\n")
-        self._read_port.readline()
-        resp = self._read_port.readline()  
+        resp = self._read_port.read(70)  
         self._sensor_info ={
-            'sensor': resp.split(b';')[3].decode("utf-8"),
-            'serial_number': int(resp.split(b';')[4])}
+            'sensor': resp.split(b';')[4].decode("utf-8"),
+            'serial_number': int(resp.split(b';')[5])}
 
         print(self._sensor_info)
         
@@ -90,7 +88,7 @@ class Disk_Surface():
                         "time": time_now,
                         "dt": dt}
             
-            self._data.append(measurement)
+            self._data = np.append(self._data, measurement)
             count+=1
             
     def shutdown(self):
@@ -106,13 +104,14 @@ class Disk_Surface():
     def analyse(self):
         ''' Analyse data  to get flatness and RPM'''
 
-        for point in self._data:
-            if point['dv'] > 0.1:
-                self._rpm_01 = np.append(self._rpm_01, point)
-            elif point['dv'] < -0.1:
-                self._rpm_02 = np.append(self._rpm_02, point)
-            else:
-                self._flatness = np.append(self._flatness, point)
+        dv = [t['dv'] for t in self._data]
+        rpm_01_condition = dv > 0.1
+        self._rpm_01 =  self._data[rpm_01_condition]
+        
+        rpm_02_condition = dv < -0.1
+        self._rpm_02 =  self._data[rpm_02_condition]
+        
+        self._flatness =  self._data[not rpm_01_condition and not rpm_02_condition]
                 
         rpm_up = 0
         if self._rpm_01.size > 1:
