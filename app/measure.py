@@ -54,6 +54,7 @@ start_time = time.time()
 measurement = {"v" : 0, 
                "q": 0,
                "time": 0}
+
 while count<1000:
     write_port.write(send_string)   
     read_port.readline()  
@@ -65,8 +66,8 @@ while count<1000:
     previous = measurement
     
     dv = round(distance - previous['v'],3)
-    time = round(time.time()-start_time,3)
-    dt = round(time - previous['time'],3)
+    time_now = round(time.time()-start_time,3)
+    dt = round(time_now - previous['time'],3)
     
     measurement = {"v" : distance, 
                    "dv" : dv,                  
