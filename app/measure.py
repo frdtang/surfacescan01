@@ -118,6 +118,8 @@ class Disk_Surface():
             diff_click_UP = np.diff(click_UP)
             # filtered diff_click_UP to ensure sufficiently apart
             diff_click_UP = diff_click_UP[diff_click_UP> 0.01]
+            
+            print(diff_click_UP)
             rpm_up = 60 / (np.mean(diff_click_UP) * 12)
       
         print(f'Measured RPM: {round(rpm_up,2)}\n')
