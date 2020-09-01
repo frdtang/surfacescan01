@@ -32,19 +32,20 @@ print(resp)
 # Turn laser on
 send_string = b":01W034;0;****\r\n"
 write_port.write(send_string)
-resp = read_port.readline() 
-print(resp) 
-resp = read_port.readline()  
-print(resp)
-
+read_port.readline() 
+read_port.readline()  
 
 
 send_string = b":01R002;3955\r\n"
 write_port.write(send_string)
-resp = read_port.readline()
-print(resp)
+read_port.readline()
 resp = read_port.readline()  
-print(resp)
+
+sensor_type = str(resp.split(b';') )
+serial_number = int(resp.split(b';') )
+
+print({'sensor': sensor_type,
+       'serial_number': serial_number})
 
 send_string = b":01R021;****\r\n"
 count=0
@@ -62,11 +63,14 @@ while count<1000:
     quality = float(resp.split(b';')[2])
     
     previous = measurement
+    
+    dv = round(distance - previous['v'],3),
     measurement = {"v" : distance, 
-                   "dv" : round(distance - previous['v'],3),
+                   "dv" : dv                  
                    "q": quality,
                    "time": round(start_time-time.time(),3)}
     
+    if dv 
     
     print(measurement)
     count+=1
