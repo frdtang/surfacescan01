@@ -104,6 +104,7 @@ class Disk_Surface():
         ''' Analyse data  to get flatness and RPM'''
 
         for point in self._data:
+            print(point)
             if point['dv'] > 0.1:
                 self._rpm_01.append(point)
             elif point['dv'] < -0.1:
@@ -126,7 +127,8 @@ class Disk_Surface():
             rpm_up = 60 / (np.mean(filter_diff_click_UP) * 12)
     
     
-        print('RPM data UP')
+        print('RPM data UP\n')
+        
         for point in self._rpm_01:
             print(point)
     
