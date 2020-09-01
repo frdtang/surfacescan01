@@ -96,8 +96,8 @@ class Disk_Surface():
         # self._read_port.readall()
         
         # activate RS485 RS485 lock
-        self._write_port.write(b":01W010;1;E9C3\r\n")
-        self._read_port.read(27) 
+        self._write_port.write(b":01W010;1;****\r\n")
+        self._read_port.readline() 
 
 
     def analyse(self):
