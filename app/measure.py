@@ -111,10 +111,6 @@ class Disk_Surface():
             else:
                 self._flatness.append(point)
 
-        print('RPM data UP')
-        for point in self._rpm_01:
-            print(point)
-
         rpm_up = 0
         if len(self._rpm_01)>1 :
             click_UP = np.array([t['time'] for t in self._rpm_01])
@@ -122,12 +118,17 @@ class Disk_Surface():
             mean_click_UP = np.mean(diff_click_UP)
             
             # filtered diff_click_UP based on average 
-            filter_diff_click_UP = diff_click_UP[diff_click_UP<mean_click_UP]
+            filter_diff_click_UP = diff_click_UP[diff_click_UP<mean_click_UP] 
 
             
             # filtered diff_click_UP to ensure sufficiently apart
             filter_diff_click_UP = filter_diff_click_UP[filter_diff_click_UP> 0.01]
             rpm_up = 60 / (np.mean(filter_diff_click_UP) * 12)
+    
+    
+        print('RPM data UP')
+        for point in self._rpm_01:
+            print(point)
     
         print(f'Measured UP RPM: {round(rpm_up,2)}\n')
 
@@ -139,7 +140,7 @@ class Disk_Surface():
             diff_click_DOWN = np.diff(click_DOWN)
             mean_click_DOWN = np.mean(diff_click_DOWN)
             
-            # filtered diff_click_UP
+            # filtered diff_click_DON
             diff_click_DOWN = diff_click_DOWN[diff_click_DOWN<mean_click_DOWN]
                                     
             # filtered diff_click_UP to ensure sufficiently apart
