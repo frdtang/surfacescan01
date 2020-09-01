@@ -103,9 +103,7 @@ class Disk_Surface():
 
     def analyse(self):
         ''' Analyse data  to get flatness and RPM'''
-        
-        print(self._data)
-
+    
         q = np.array([t['q'] for t in self._data])
         rpm_condition = q > 1
         self._rpm =  self._data[rpm_condition]
