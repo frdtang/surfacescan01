@@ -108,16 +108,15 @@ class Disk_Surface():
 
         for point in self._data:
             if point['dv'] > 0.1:
-                np.append(self._rpm_01, point)
+                self._rpm_01 = np.append(self._rpm_01, point)
             elif point['dv'] < -0.1:
-                np.append(self._rpm_02, point)
+                self._rpm_02 = np.append(self._rpm_02, point)
             else:
-                np.append(self._flatness, point)
+                self._flatness = np.append(self._flatness, point)
                 
         rpm_up = 0
         if self._rpm_01.size >1:
             click_UP = [t['time'] for t in self._rpm_01]
-            print(click_UP)
             diff_click_UP = np.diff(click_UP)
                         
             # filtered diff_click_UP to ensure sufficiently apart
