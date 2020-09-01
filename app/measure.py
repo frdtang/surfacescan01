@@ -105,14 +105,13 @@ class Disk_Surface():
     def analyse(self):
         ''' Analyse data  to get flatness and RPM'''
         
-        print(self._data)
-
         q = np.array([t['q'] for t in self._data])
-        rpm_condition_01 = q > 1
+        good_condition = q == 1        
+        self._data =  self._data[good_condition]
+
+
         dv = np.array([t['dv'] for t in self._data])
-        rpm_condition_02 = dv > 0.1
-        rpm_condition = np.logical_or(rpm_condition_01, 
-                                      rpm_condition_02)
+        rpm_condition = dv > 0.1
         self._rpm =  self._data[rpm_condition]
 
         flatness_condition = np.logical_not(rpm_condition)
@@ -123,9 +122,10 @@ class Disk_Surface():
             print(self._rpm)
             click_UP = [t['time'] for t in self._rpm]
             diff_click_UP = np.diff(click_UP)
+            
+            print(diff_click_UP)
             # filtered diff_click_UP to ensure sufficiently apart
             diff_click_UP = diff_click_UP[diff_click_UP > 0.01]
-            
             
             #first second average
             avg = np.mean(diff_click_UP)
