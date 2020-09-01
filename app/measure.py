@@ -30,7 +30,7 @@ resp = read_port.readline()
 print(resp)
 
 # Turn laser on
-send_string = b":01W034;1;****\r\n"
+send_string = b":01W034;0;****\r\n"
 write_port.write(send_string)
 resp = read_port.readline() 
 print(resp) 
