@@ -64,13 +64,15 @@ while count<1000:
     
     previous = measurement
     
-    dv = round(distance - previous['v'],3),
-    measurement = {"v" : distance, 
-                   "dv" : dv                  
-                   "q": quality,
-                   "time": round(start_time-time.time(),3)}
+    dv = round(distance - previous['v'],3)
+    time = round(time.time()-start_time,3)
+    dt = round(time - previous['time'],3)
     
-    if dv 
+    measurement = {"v" : distance, 
+                   "dv" : dv,                  
+                   "q": quality,
+                   "time": time,
+                   "dt": dt}
     
     print(measurement)
     count+=1
