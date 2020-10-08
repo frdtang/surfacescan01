@@ -86,6 +86,7 @@ class Disk_Surface():
                         "dt": dt}
             
             self._data = np.append(self._data, measurement)
+            print(self._data)
             count+=1
             
     def shutdown(self):
