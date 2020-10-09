@@ -1,5 +1,4 @@
 flask
-numpy
 asn1crypto==0.24.0
 attrs==20.2.0
 bcrypt==3.2.0
@@ -21,7 +20,7 @@ jsonschema==3.2.0
 keyring==17.1.1
 keyrings.alt==3.1.1
 msgpack==0.6.1
-numpy==1.19.1
+numpy==1.18.5
 paramiko==2.7.2
 pycparser==2.20
 pycrypto==2.6.1
