@@ -11,3 +11,6 @@ def distance():
     return disk_surface.distance,\
         200, {'ContentType': 'application/json'}
 
+@app.route('/', methods = ["GET"])
+def home():
+    return "Home"
