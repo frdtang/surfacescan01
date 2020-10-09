@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  motor01:
+  surface_sensor_01:
     build:
       context: ./
       dockerfile: ./Dockerfile
