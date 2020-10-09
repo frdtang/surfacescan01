@@ -11,9 +11,9 @@ class Disk_Surface():
  
         self._sensor_info = {}
         self._data = np.array([]) 
-        self._rpm_01 = np.array([]) 
-        self._rpm_02 =  np.array([]) 
-        self._flatness =  np.array([]) 
+        self._flatness =  np.array([])
+        self._distance = {}
+        self._rpm = 0
         
         self._read_port = serial.Serial(
             port='/dev/ttyS0',
@@ -33,6 +33,10 @@ class Disk_Surface():
     @property
     def data(self):
         return self._data
+    
+    @property
+    def distance(self):
+        return self._distance
         
     def measure(self):
         
@@ -85,8 +89,7 @@ class Disk_Surface():
                         "time": time_now,
                         "dt": dt}
             
-            self._data = np.append(self._data, measurement)
-            print(self._data)
+            self._data = np.append(self._data, measurement)        
             count+=1
             
     def shutdown(self):
@@ -117,7 +120,7 @@ class Disk_Surface():
                                         rpm_condition_02)
         flatness_condition = np.logical_not(rpm_condition)
         self._flatness =  self._data[flatness_condition]
-                
+
         rpm_up = 0
         if self._rpm.size > 1:
             click_UP = [t['time'] for t in self._rpm]
@@ -129,14 +132,12 @@ class Disk_Surface():
             min_dt = np.min(diff_click_UP)
             rpm_up = 60 / (min_dt * 12)
       
-        print(f'Measured RPM: {round(rpm_up,2)}\n')
-
+        # print(f'Measured RPM: {round(rpm_up,2)}\n')
             
         distances = np.array([t['v'] for t in self._flatness])
         mean_distance = round(np.mean(distances), 3)
         std_dev_distance = round(np.std(distances), 3)
-        print(f'distance: {mean_distance}\nStd. dev.: {std_dev_distance}\n')
-
-
-disk_surface = Disk_Surface()
-disk_surface.measure()
+        # print(f'distance: {mean_distance}\nStd. dev.: {std_dev_distance}\n')
+        self.distance = {"mean_distance": mean_distance,
+                         "std_dev_distance": std_dev_distance}
+        self.rpm = rpm_up
