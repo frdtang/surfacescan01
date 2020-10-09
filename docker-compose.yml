@@ -1,16 +1,16 @@
 version: '3.7'
 services:
-  surface_sensor_01:
+  sensor:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    container_name: distancesensor
+    container_name: distance
     volumes:
       - demo:/data/
     ports:
       - "8000:8000"
     devices:
-      - "ftdi://ftdi:232:FT4IVQEG/1:ftdi://ftdi:232:FT4IVQEG/1"
+      - "ftdi:232:FT4IVQEG/1:ftdi://ftdi:232:FT4IVQEG/1"
       - "/dev/ttyS0:/dev/ttyS0"
 volumes:
   demo:
