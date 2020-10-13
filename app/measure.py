@@ -139,7 +139,7 @@ class Disk_Surface():
         distances = np.array([t['v'] for t in self._flatness])
         mean_distance = round(np.mean(distances), 3)
         std_dev_distance = round(np.std(distances), 3)
-        # print(f'distance: {mean_distance}\nStd. dev.: {std_dev_distance}\n')
+        print(f'distance: {mean_distance}\nStd. dev.: {std_dev_distance}\n')
         self.distance = {"mean_distance": mean_distance,
                          "std_dev_distance": std_dev_distance}
         self.rpm = rpm_up
