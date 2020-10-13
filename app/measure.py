@@ -14,24 +14,7 @@ class Disk_Surface():
         self._flatness =  np.array([])
         self._distance = {}
         self._rpm = 0
-      
-        self._write_port = pyftdi.serialext.serial_for_url(
-            'ftdi://ftdi:232:FT4IVQEG/1',
-            baudrate=38400,
-            bytesize=8,
-            parity=serial.PARITY_EVEN,
-            stopbits=1,
-            timeout=1)
-        
-        self._read_port = serial.Serial(
-            port='/dev/ttyS0',
-            baudrate=38400,
-            bytesize=8,
-            stopbits=1,
-            timeout=1)
 
-
-    
     @property
     def data(self):
         return self._data
@@ -53,6 +36,21 @@ class Disk_Surface():
     
     def setup_sensor(self): 
         ''' Setup and get sensor info'''
+        
+        self._write_port = pyftdi.serialext.serial_for_url(
+            'ftdi://ftdi:232:FT4IVQEG/1',
+            baudrate=38400,
+            bytesize=8,
+            parity=serial.PARITY_EVEN,
+            stopbits=1,
+            timeout=1)
+        
+        self._read_port = serial.Serial(
+            port='/dev/ttyS0',
+            baudrate=38400,
+            bytesize=8,
+            stopbits=1,
+            timeout=1)
         
         # activate RS485 RS485 lock
         self._write_port.write(b":01W010;0;E9C3\r\n")
