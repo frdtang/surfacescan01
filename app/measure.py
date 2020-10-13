@@ -14,6 +14,14 @@ class Disk_Surface():
         self._flatness =  np.array([])
         self._distance = {}
         self._rpm = 0
+      
+        self._write_port = pyftdi.serialext.serial_for_url(
+            'ftdi://ftdi:232:FT4IVQEG/1',
+            baudrate=38400,
+            bytesize=8,
+            parity=serial.PARITY_EVEN,
+            stopbits=1,
+            timeout=1)
         
         self._read_port = serial.Serial(
             port='/dev/ttyS0',
@@ -22,13 +30,7 @@ class Disk_Surface():
             stopbits=1,
             timeout=1)
 
-        self._write_port = pyftdi.serialext.serial_for_url(
-            'ftdi://ftdi:232:FT4IVQEG/1',
-            baudrate=38400,
-            bytesize=8,
-            parity=serial.PARITY_EVEN,
-            stopbits=1,
-            timeout=1)
+
     
     @property
     def data(self):
