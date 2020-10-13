@@ -10,7 +10,6 @@ services:
     ports:
       - "8000:8000"
     devices:
-      - "ftdi:232:FT4IVQEG/1:ftdi://ftdi:232:FT4IVQEG/1"
       - "/dev/ttyS0:/dev/ttyS0"
 volumes:
   demo:
