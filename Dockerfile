@@ -45,8 +45,6 @@ EXPOSE 8000
 
 WORKDIR /var/www/apache-flask
 
-RUN usermod -aG docker $USER
-
 RUN mkdir -p /home/winston
 RUN chmod 777 /home/winston
 
