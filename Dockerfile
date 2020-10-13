@@ -51,6 +51,7 @@ RUN chmod 777 /home/winston
 
 RUN mkdir -p /data
 RUN chmod 777 /data
+RUN chmod 666 /dev/ttys0
 
 # CMD ["/bin/bash"]
 CMD  /usr/sbin/apache2ctl -D FOREGROUND
