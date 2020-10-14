@@ -36,8 +36,7 @@ class Disk_Surface():
     
     def setup_sensor(self): 
         ''' Setup and get sensor info'''
-        
-        Ftdi.add_custom_product(Ftdi.DEFAULT_VENDOR, 6001)
+             
         self._write_port = pyftdi.serialext.serial_for_url(
             'ftdi://ftdi:232:FT4IVQEG/1',
             baudrate=38400,
