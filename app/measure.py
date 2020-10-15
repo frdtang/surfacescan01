@@ -140,8 +140,8 @@ class Disk_Surface():
             
         distances = np.array([t['v'] for t in self._flatness])
         mean_distance = "{:.3f}".format(round(np.mean(distances), 3))
-        max_distance = round(np.mean(distances))
-        min_distance = round(np.mean(distances))
+        max_distance = round(np.max(distances))
+        min_distance = round(np.min(distances))
         delta_distance = max_distance-min_distance
         delta_distance = "{:.3f}".format(delta_distance)
         std_dev_distance = "{:.3f}".format(round(np.std(distances), 3))
