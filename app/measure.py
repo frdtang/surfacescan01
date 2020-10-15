@@ -143,11 +143,11 @@ class Disk_Surface():
         max_distance = round(np.mean(distances))
         min_distance = round(np.mean(distances))
         delta_distance = max_distance-min_distance
-        delta_distance = "{:.3f}".format(round(np.mean(delta_distance), 3))
+        delta_distance = "{:.3f}".format(delta_distance)
         std_dev_distance = "{:.3f}".format(round(np.std(distances), 3))
         self.distance = {"mean_distance": mean_distance, 
                          "std_dev_distance": std_dev_distance,
-                         "delta_distance": }
+                         "delta_distance": delta_distance}
         
         
         self.rpm = rpm_up
