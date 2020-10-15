@@ -75,7 +75,7 @@ class Disk_Surface():
                        "q": 0,
                        "time": 0}
         
-        while count<100:
+        while count<200:
             self._write_port.write(":01R021;****\r\n")    
             resp = self._read_port.read(35)  
             time_now = round(time.time()-start_time,3)
@@ -140,6 +140,14 @@ class Disk_Surface():
             
         distances = np.array([t['v'] for t in self._flatness])
         mean_distance = "{:.3f}".format(round(np.mean(distances), 3))
+        max_distance = round(np.mean(distances))
+        min_distance = round(np.mean(distances))
+        delta_distance = max_distance-min_distance
+        delta_distance = "{:.3f}".format(round(np.mean(delta_distance), 3))
         std_dev_distance = "{:.3f}".format(round(np.std(distances), 3))
-        self.distance = {"mean_distance": mean_distance, "std_dev_distance": std_dev_distance}
+        self.distance = {"mean_distance": mean_distance, 
+                         "std_dev_distance": std_dev_distance,
+                         "delta_distance": }
+        
+        
         self.rpm = rpm_up

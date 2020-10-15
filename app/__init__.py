@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route('/distance', methods = ["GET"])
 def distance():
     '''
+        Measure distance to disk
     '''
     disk_surface = Disk_Surface()
     disk_surface.measure()    
