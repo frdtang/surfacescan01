@@ -75,7 +75,7 @@ class Disk_Surface():
                        "q": 0,
                        "time": 0}
         
-        while count<200:
+        while count<100:
             self._write_port.write(":01R021;****\r\n")    
             resp = self._read_port.read(35)  
             time_now = round(time.time()-start_time,3)
